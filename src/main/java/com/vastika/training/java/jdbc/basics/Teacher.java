@@ -1,29 +1,26 @@
-package com.vastika.training.java.jdbc1.basics;
-
-import java.util.Date;
+package com.vastika.training.java.jdbc.basics;
 
 public class Teacher {
     private int id;
     private String firstname;
     private String lastname;
     private String address;
-    private String dateofbirth;
+    private String subject;
 
-    public Teacher(int id, String firstname, String lastname, String address, String dateofbirth) {
+    public Teacher(int id, String firstname, String lastname, String address, String subject) {
         this.id = id;
         this.firstname = firstname;
         this.lastname = lastname;
         this.address = address;
-        this.dateofbirth = dateofbirth;
+        this.subject = subject;
     }
     public int getId (){return id;}
     public String getFirstname(){return firstname;}
     public String getLastname(){return lastname;}
     public String getAddress(){return address;}
+    public String getSubject(){return address;}
 
-    public String getDateofbirth() {
-        return dateofbirth;
-    }
+
 
     @Override
     public String toString() {
@@ -32,7 +29,7 @@ public class Teacher {
                 ", firstname='" + firstname + '\'' +
                 ", lastname='" + lastname + '\'' +
                 ", address='" + address + '\'' +
-                ", dateofbirth=" + dateofbirth +
+                ", subject=" + subject +
                 '}';
     }
 }

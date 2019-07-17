@@ -1,4 +1,4 @@
-package com.vastika.training.java.jdbc1.basics;
+package com.vastika.training.java.jdbc.basics.Repository;
 
 import java.util.List;
 

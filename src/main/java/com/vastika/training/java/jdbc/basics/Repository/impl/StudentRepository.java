@@ -1,6 +1,8 @@
-package com.vastika.training.java.jdbc.basics;
+package com.vastika.training.java.jdbc.basics.Repository.impl;
 
-import com.vastika.training.java.jdbc1.basics.CrudeRepository;
+import com.vastika.training.java.jdbc.basics.DbConnector;
+import com.vastika.training.java.jdbc.basics.Repository.CrudeRepository;
+import com.vastika.training.java.jdbc.basics.Student;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
