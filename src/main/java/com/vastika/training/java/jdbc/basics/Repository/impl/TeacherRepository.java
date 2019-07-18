@@ -64,12 +64,13 @@ public class TeacherRepository implements CrudeRepository<Teacher> {
         Connection connection = DbConnector.getConnection();
 
         try{
-            String sql1 = "Insert into teacher( id, firstname, lastname, address, subject) values(?,?,?,?,?)";
+            String sql1 = "Insert into teacher( id, firstname, lastname, address, subject) values(?,?,?,?,?) ";
             PreparedStatement ps = connection.prepareStatement(sql1);
             ps.setInt(1, teacher.getId());
             ps.setString(2,teacher.getFirstname());
             ps.setString(3,teacher.getLastname());
             ps.setString(4,teacher.getAddress());
+            ps.setString(5,teacher.getSubject());
             ps.executeUpdate();
 
             return true;

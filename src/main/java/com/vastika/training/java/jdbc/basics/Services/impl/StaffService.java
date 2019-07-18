@@ -50,22 +50,46 @@ public class StaffService implements BaseService {
         System.out.println(staffid2);
     }
 
+    public boolean checkIfIdExists(int id){
+        Staff staff = repository.findById(id);
+        if(staff == null){
+            return false;
+        }
+        return true;
+    }
+
     public void UpdateInfo() {
-        Scanner sc = new Scanner(System.in);
-        System.out.print("Enter staff id: ");
-        int id = Integer.valueOf(sc.next());
-        System.out.print("Enter staff first name: ");
-        String firstName = sc.next();
-        System.out.print("Enter staff last name: ");
-        String lastName = sc.next();
-        System.out.print("Enter department: ");
-        String department = String.valueOf(sc.next());
-        Staff toUpdate = new Staff(id, firstName, lastName, department);
+        Staff toUpdate = getStaffDetails();
+
+        if(getStaffDetails() == null){
+            while(toUpdate == null){
+                System.out.println("Enter a different ID");
+                toUpdate = getStaffDetails();
+            }
+        }
         boolean updated = repository.update(toUpdate);
         if (updated) {
             System.out.println("Success!");
         } else {
             System.out.println("Failed!");
+        }
+    }
+
+    private Staff getStaffDetails() {
+        Scanner sc = new Scanner(System.in);
+        System.out.print("Enter staff id: ");
+
+        int id = Integer.valueOf(sc.next());
+        if(checkIfIdExists(id)){
+            return null;
+        }else {
+            System.out.print("Enter staff first name: ");
+            String firstName = sc.next();
+            System.out.print("Enter staff last name: ");
+            String lastName = sc.next();
+            System.out.print("Enter department: ");
+            String department = String.valueOf(sc.next());
+            return new Staff(id, firstName, lastName, department);
         }
     }
 
