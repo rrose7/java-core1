@@ -41,7 +41,8 @@ public class TeacherRepository implements CrudeRepository<Teacher> {
     public Teacher findById(int userid) {
         Connection connection = DbConnector.getConnection();
         try {
-            PreparedStatement ps = connection.prepareStatement("select * from teacher where id = " + userid);
+            PreparedStatement ps = connection.prepareStatement("select * from teacher where id = ?");
+            ps.setInt(1, userid);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
                 int id = rs.getInt("id");
@@ -63,10 +64,14 @@ public class TeacherRepository implements CrudeRepository<Teacher> {
         Connection connection = DbConnector.getConnection();
 
         try{
-            String sql1 = "Insert into teacher( id, firstname, lastname, address, subject) values("+teacher.getId()+",'"+teacher.getFirstname()
-                    + "','"+teacher.getLastname() + "','"+teacher.getAddress()+"','"+teacher.getSubject()+"'3)";
+            String sql1 = "Insert into teacher( id, firstname, lastname, address, subject) values(?,?,?,?,?)";
             PreparedStatement ps = connection.prepareStatement(sql1);
+            ps.setInt(1, teacher.getId());
+            ps.setString(2,teacher.getFirstname());
+            ps.setString(3,teacher.getLastname());
+            ps.setString(4,teacher.getAddress());
             ps.executeUpdate();
+
             return true;
         }
         catch (SQLException e){

@@ -1,9 +1,8 @@
 package com.vastika.training.java.jdbc.basics.Repository.impl;
 
 import com.vastika.training.java.jdbc.basics.DbConnector;
+import com.vastika.training.java.jdbc.basics.Models.Staff;
 import com.vastika.training.java.jdbc.basics.Repository.CrudeRepository;
-import com.vastika.training.java.jdbc.basics.Student;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -11,44 +10,44 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class StudentRepository implements CrudeRepository<Student> {
-    public List<Student> findAll() {
+public class StaffRepository implements CrudeRepository<Staff> {
+    public List<Staff> findAll() {
         Connection connection = DbConnector.getConnection();
-        List<Student> students = new ArrayList<>();
+        List<Staff> staffs = new ArrayList<>();
         try {
-            PreparedStatement ps = connection.prepareStatement("select * from student");
+            PreparedStatement ps = connection.prepareStatement("select * from staff");
             ResultSet rs = ps.executeQuery();
 
             while (rs.next()) {
                 int id = rs.getInt("id");
                 String firstName = rs.getString("firstName");
                 String lastName = rs.getString("lastName");
-                double gpa = rs.getDouble("gpa");
+                String department = rs.getString("department");
 
-                Student student = new Student(id, firstName, lastName, gpa);
+                Staff staff = new Staff(id, firstName, lastName, department);
 
-                students.add(student);
+                staffs.add(staff);
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
 
-        return students;
+        return staffs;
     }
 
-    public Student findById(int userid) {
+    public Staff findById(int userid) {
         Connection connection = DbConnector.getConnection();
         try {
-            PreparedStatement ps = connection.prepareStatement("select * from student where id = ?");
+            PreparedStatement ps = connection.prepareStatement("select * from staff where id = ?");
             ps.setInt(1,userid);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
                 int id = rs.getInt("id");
                 String firstName = rs.getString("firstName");
                 String lastName = rs.getString("lastName");
-                double gpa = rs.getDouble("gpa");
-                Student student = new Student(id, firstName,lastName, gpa);
-                return student;
+                String department = rs.getString("department");
+                Staff staff = new Staff(id, firstName,lastName, department);
+                return staff;
 
             }
         } catch (SQLException e) {
@@ -57,16 +56,17 @@ public class StudentRepository implements CrudeRepository<Student> {
         return null;
     }
 
-    public boolean update(Student student){
+    public boolean update(Staff staff){
         Connection connection = DbConnector.getConnection();
 
         try{
-            String sql1 = "Insert into student( id, firstname, lastname, gpa) values(?,?, ?, ?)";
+            String sql1 = "Insert into staff( id, firstname, lastname, department) values(?,?,?,?)";
             PreparedStatement ps = connection.prepareStatement(sql1);
-            ps.setString(2, student.getFirstName());
-            ps.setString(3, student.getLastName());
-            ps.setDouble(4, student.getGpa());
-            ps.setInt(1, student.getId());
+            ps.setInt(1, staff.getId());
+            ps.setString(2, staff.getFirstName());
+            ps.setString(3, staff.getLastName());
+            ps.setString(4, staff.getDepartment());
+
             ps.executeUpdate();
             return true;
         }
